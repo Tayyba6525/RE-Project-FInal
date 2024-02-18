@@ -1,0 +1,63 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class SourceCodeAnalyzer {
+
+    // Function to parse a Java source code file and extract relevant metrics
+    public static Metrics analyzeSourceCode(String filePath) {
+        Metrics metrics = new Metrics();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            int totalLines = 0;
+            int commentLines = 0;
+
+            while ((line = reader.readLine()) != null) {
+                totalLines++;
+                if (line.trim().startsWith("//") || line.trim().startsWith("/*")) {
+                    commentLines++;
+                }
+            }
+
+            metrics.setLoc(totalLines - commentLines);
+            metrics.setCommentPercentage((double) commentLines / totalLines * 100);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return metrics;
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        String filePath = "C:\\Users\\Taiba\\Desktop\\ArgoUML-SPL-master\\ArgoUML-SPL-master\\Example.java";
+        Metrics metrics = analyzeSourceCode(filePath);
+        if (metrics != null) {
+            System.out.println("LOC: " + metrics.getLoc());
+            System.out.println("Comment Percentage: " + String.format("%.2f%%", metrics.getCommentPercentage()));
+        }
+    }
+}
+
+class Metrics {
+    private int loc;
+    private double commentPercentage;
+
+    public int getLoc() {
+        return loc;
+    }
+
+    public void setLoc(int loc) {
+        this.loc = loc;
+    }
+
+    public double getCommentPercentage() {
+        return commentPercentage;
+    }
+
+    public void setCommentPercentage(double commentPercentage) {
+        this.commentPercentage = commentPercentage;
+    }
+}

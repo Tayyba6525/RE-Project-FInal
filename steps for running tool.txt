@@ -1,0 +1,6 @@
+These are the steps for running out the tool.
+1- Run the java file on Visual Studio tool.
+2- Run the Database using Sqlite3.
+3- Run The ArgoUML file on Eclipse tool and extract AST from it.
+4- When you will Run the Java file you have a link of ArgoUML folder in it, this will create new tool by applying metrics like LOC, COde Readibility etc.
+5- Newly created tool which tell you all code measuring improvement and extract all metrics in a code.
